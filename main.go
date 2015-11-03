@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 const (
@@ -286,7 +287,11 @@ func main() {
 	key[2] = [4]byte{0x20, 0x4B, 0x75, 0x6E}
 	key[3] = [4]byte{0x67, 0x20, 0x46, 0x75}
 	aes := NewAES(key)
-	input := []byte{0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa, 0xa}
+	inputLen := 100000
+	input := []byte{}
+	for i := 0; i < inputLen; i++ {
+		input = append(input, byte(rand.Intn(0xFF)))
+	}
 	enocoded := aes.Encode(input)
 	decoded := aes.Decode(enocoded)
 	fmt.Printf("%v\n%v\n%v\n", input, enocoded, decoded)
